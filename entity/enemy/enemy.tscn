@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://di2f2x84namip"]
+
+[ext_resource type="Texture2D" uid="uid://cwnxqaw43slgk" path="res://icon.svg" id="1_8vdsg"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8vdsg"]
+blend_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8vdsg"]
+size = Vector2(22, 22)
+
+[node name="enemy" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_8vdsg")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_8vdsg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8vdsg")
