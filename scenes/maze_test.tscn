@@ -46,6 +46,7 @@ tile_set = SubResource("TileSet_qarnv")
 [node name="player" parent="." instance=ExtResource("2_6dmrh")]
 unique_name_in_owner = true
 position = Vector2(48, 48)
+rotation = -0.0170665
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -56,5 +57,5 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.703108, 0.173618, 0.139892, 1)
+color = Color(0.0235294, 0.0745098, 0.133333, 0.929412)
 script = ExtResource("5_67hgm")
