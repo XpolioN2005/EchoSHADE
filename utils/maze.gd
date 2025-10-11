@@ -1,6 +1,3 @@
-# MAZE.gd
-
-
 extends Node2D
 
 @onready var tilemap: TileMapLayer = $TileMapLayer
@@ -11,6 +8,10 @@ extends Node2D
 @export var CELL_SIZE := 1  # tile size in tiles, not pixels
 @export var SEED := 0
 @export var MIRROR_PERCENT := 0.3
+
+# loop settings
+@export var LOOP_PERCENT := 0.025  # fraction of cells to consider for extra openings (0.0 - 1.0)
+@export var LOOP_COUNT := 0      # if >0, overrides LOOP_PERCENT and uses this exact count
 
 # Internal data
 var maze = []        # 2D grid of 0 = path, 1 = wall
@@ -29,6 +30,7 @@ func _ready():
 	setup_ui()
 	initialize_maze()
 	generate_maze_iterative()
+	add_loops()
 	place_mirrors()
 	apply_to_tilemap()
 
@@ -78,6 +80,45 @@ func generate_maze_iterative():
 		else:
 			stack.pop_back()
 
+func add_loops():
+	# Build candidate list: wall cells that sit between two path tiles (vertical or horizontal)
+	var candidates: Array = []
+	for y in range(1, ROWS - 1):
+		for x in range(1, COLS - 1):
+			if maze[y][x] == 1:
+				# check vertical neighbors (path above & below)
+				if maze[y - 1][x] == 0 and maze[y + 1][x] == 0:
+					candidates.append(Vector2i(x, y))
+					continue
+				# check horizontal neighbors (path left & right)
+				if maze[y][x - 1] == 0 and maze[y][x + 1] == 0:
+					candidates.append(Vector2i(x, y))
+					continue
+
+	var total_candidates = candidates.size()
+	if total_candidates == 0:
+		return
+
+	# compute target count (GDScript-friendly)
+	var target: int
+	if LOOP_COUNT > 0:
+		target = min(LOOP_COUNT, total_candidates)
+	else:
+		target = int(clamp(float(ROWS * COLS) * LOOP_PERCENT, 0.0, float(total_candidates)))
+
+	target = int(clamp(target, 0, total_candidates))
+
+	# shuffle candidates using rng
+	for i in range(total_candidates - 1, 0, -1):
+		var j = rng.randi_range(0, i)
+		var tmp = candidates[i]
+		candidates[i] = candidates[j]
+		candidates[j] = tmp
+
+	# open selected walls to create loops
+	for i in range(target):
+		var pos: Vector2i = candidates[i]
+		maze[pos.y][pos.x] = 0
 
 func place_mirrors(min_mirrors := 4):
 	mirrors.clear()
@@ -88,13 +129,14 @@ func place_mirrors(min_mirrors := 4):
 		for x in range(1, COLS - 1):
 			if maze[y][x] == 0:
 				var open_count = 0
-				if maze[y-1][x] == 0: open_count += 1
-				if maze[y+1][x] == 0: open_count += 1
-				if maze[y][x-1] == 0: open_count += 1
-				if maze[y][x+1] == 0: open_count += 1
+				if maze[y - 1][x] == 0: open_count += 1
+				if maze[y + 1][x] == 0: open_count += 1
+				if maze[y][x - 1] == 0: open_count += 1
+				if maze[y][x + 1] == 0: open_count += 1
 				if open_count == 1:
 					dead_ends.append(Vector2i(x, y))
 
+	# shuffle dead_ends with rng
 	for i in range(dead_ends.size() - 1, 0, -1):
 		var j = rng.randi_range(0, i)
 		var tmp = dead_ends[i]; dead_ends[i] = dead_ends[j]; dead_ends[j] = tmp
@@ -133,7 +175,6 @@ func place_mirrors(min_mirrors := 4):
 					mirrors.append(Vector2i(x,y))
 					return
 
-
 func apply_to_tilemap():
 	tilemap.clear()
 	for y in range(ROWS):
@@ -148,5 +189,6 @@ func apply_to_tilemap():
 func _on_generate_button_pressed():
 	randomize_seed()
 	generate_maze_iterative()
+	add_loops()
 	place_mirrors(5)
 	apply_to_tilemap()
