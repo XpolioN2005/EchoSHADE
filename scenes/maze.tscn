@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bxuxy7rlb15k5"]
+[gd_scene load_steps=15 format=3 uid="uid://bxuxy7rlb15k5"]
 
 [ext_resource type="Script" uid="uid://blrj0ors37g62" path="res://utils/maze.gd" id="1_crgmj"]
 [ext_resource type="Texture2D" uid="uid://c04vlidy1d3sd" path="res://assests/tiles.png" id="2_ykl68"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://boovqwd2cdoyp" path="res://misc/scenes/enemy_holder.tscn" id="4_ykl68"]
 [ext_resource type="Script" uid="uid://dqepma64i31id" path="res://scripts/Cutoutshader.gd" id="5_6rghc"]
 [ext_resource type="PackedScene" uid="uid://djeo46itgirne" path="res://misc/scenes/mirror_manager.tscn" id="7_ykl68"]
+[ext_resource type="Shader" uid="uid://bk5uypntted2a" path="res://shaders/screen_fog.gdshader" id="8_15xn6"]
+[ext_resource type="PackedScene" uid="uid://bbihkavihuf8p" path="res://entity/enemy/enemy_all_knowing.tscn" id="8_i67be"]
+[ext_resource type="Script" uid="uid://cw01p86yyhvks" path="res://scripts/screen_fog.gd" id="9_6rghc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i67be"]
 texture = ExtResource("2_ykl68")
@@ -54,11 +57,16 @@ sources/0 = SubResource("TileSetAtlasSource_i67be")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_67hgm"]
 shader = ExtResource("4_15xn6")
 shader_parameter/base_color = Vector4(1, 1, 1, 1)
-shader_parameter/num_points = 1
-shader_parameter/points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/rect_size = Vector2(0, 0)
 shader_parameter/radius = 50.0
 shader_parameter/smoothness = 10.0
-shader_parameter/rect_size = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6rghc"]
+shader = ExtResource("8_15xn6")
+shader_parameter/base_color = Vector4(1, 1, 1, 1)
+shader_parameter/rect_size = Vector2(100, 100)
+shader_parameter/radius = Vector2(100, 50)
+shader_parameter/smoothness = 5.0
 
 [node name="maze" type="Node2D"]
 script = ExtResource("1_crgmj")
@@ -86,3 +94,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0235294, 0.0745098, 0.133333, 0.929412)
 script = ExtResource("5_6rghc")
+
+[node name="screen_fog" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_6rghc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_6rghc")
+
+[node name="enemy_AL_KNOWING" parent="." instance=ExtResource("8_i67be")]

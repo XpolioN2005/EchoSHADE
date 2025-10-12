@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="spoooky jam 2005"
+run/main_scene="uid://bxuxy7rlb15k5"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -1,80 +1,80 @@
-[gd_scene load_steps=22 format=3 uid="uid://di2f2x84namip"]
+[gd_scene load_steps=22 format=3 uid="uid://bbihkavihuf8p"]
 
-[ext_resource type="Script" uid="uid://cvlgftww8hilx" path="res://entity/enemy/enemy.gd" id="1_lvn57"]
-[ext_resource type="Texture2D" uid="uid://e1slonerhmco" path="res://assests/enemy_base_16x16.png" id="2_lvn57"]
+[ext_resource type="Script" uid="uid://dw5uxfwh7seyk" path="res://entity/enemy/enemy_all_knowing.gd" id="1_mvlod"]
+[ext_resource type="Texture2D" uid="uid://e1slonerhmco" path="res://assests/enemy_base_16x16.png" id="2_mvlod"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8vdsg"]
 size = Vector2(22, 22)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pmu85"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0p2mk"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7mx5f"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gevl6"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xxpe2"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_506ku"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(48, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0tnqs"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(32, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cti5q"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(16, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_43lrn"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(0, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sd3tp"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(0, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xcurd"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(16, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5yq76"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(32, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8t2v0"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(48, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uwk5a"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(0, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gmq0b"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(16, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xts58"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(32, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_byq0e"]
-atlas = ExtResource("2_lvn57")
+atlas = ExtResource("2_mvlod")
 region = Rect2(48, 16, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_cvd3r"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_kvyjx"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -153,8 +153,8 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="enemy" type="Area2D"]
-script = ExtResource("1_lvn57")
+[node name="enemy_ALl_KNOWING" type="Area2D"]
+script = ExtResource("1_mvlod")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8vdsg")
@@ -162,9 +162,15 @@ shape = SubResource("RectangleShape2D_8vdsg")
 [node name="pathtimer" type="Timer" parent="."]
 autostart = true
 
+[node name="start hunt timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_cvd3r")
+sprite_frames = SubResource("SpriteFrames_kvyjx")
 animation = &"run_down"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="pathtimer" to="." method="_on_path_timer_timeout"]
+[connection signal="timeout" from="start hunt timer" to="." method="_on_start_hunt_timer_timeout"]

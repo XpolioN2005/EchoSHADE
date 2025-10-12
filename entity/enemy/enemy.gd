@@ -1,5 +1,9 @@
 extends Area2D
 
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+
+var last_dir: Vector2 = Vector2.DOWN
+
 # ===== CONFIG =====
 @export var enemy_speed_walk: float = 60.0
 @export var enemy_speed_run: float = 140.0
@@ -63,22 +67,31 @@ func _physics_process(delta: float) -> void:
 			state = State.INVESTIGATE
 			_go_to_world_position(last_seen_pos)
 	
-	# movement along path if moving
+	# movement along path
 	if _is_moving and path.size() > 0 and path_index < path.size():
 		var target_grid = path[path_index]
 		var target_world = Vector2(target_grid.x * 32 + 16, target_grid.y * 32 + 16)
 		var dir = (target_world - global_position)
 		var dist = dir.length()
+		var move_vec = Vector2.ZERO
 		if dist > 0.001:
 			dir = dir.normalized()
 			var speed = enemy_speed_run if (state == State.CHASE) else enemy_speed_walk
-			global_position += dir * speed * delta
+			move_vec = dir * speed * delta
+			global_position += move_vec
+		# update animation
+		_update_animation(dir if dist > 0.001 else Vector2.ZERO)
+		
 		# reached waypoint
 		if dist < reach_threshold:
 			path_index += 1
 			# if finished path
 			if path_index >= path.size():
 				_on_reached_path_end()
+	else:
+		# idle
+		_update_animation(Vector2.ZERO)
+
 
 # ---------- SENSING ----------
 func _can_see_player() -> bool:
@@ -188,6 +201,26 @@ func randi_range(a:int, b:int) -> int:
 #    if player:
 #        draw_line(Vector2.ZERO, to_local(player.global_position), Color.red)
 
+func _update_animation(move_vec: Vector2) -> void:
+	if move_vec == Vector2.ZERO:
+		# always idle down
+		anim.play("idle_down")
+	else:
+		# moving
+		if abs(move_vec.x) > abs(move_vec.y):
+			if move_vec.x > 0:
+				anim.play("run_right")
+				last_dir = Vector2.RIGHT
+			else:
+				anim.play("run_left")
+				last_dir = Vector2.LEFT
+		else:
+			if move_vec.y > 0:
+				anim.play("run_down")
+				last_dir = Vector2.DOWN
+			else:
+				anim.play("run_up")
+				last_dir = Vector2.UP
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
