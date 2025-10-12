@@ -16,7 +16,7 @@ void fragment() {
 
         if (dist < radius) {
             // alpha = 0 at center, 1 at edge of radius
-            float alpha = smoothstep(radius-smoothness, radius, dist); 
+            float alpha = smoothstep(radius-smoothness, radius, dist);
             final_color.a *= alpha;
         }
     }

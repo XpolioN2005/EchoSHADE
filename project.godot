@@ -14,6 +14,10 @@ config/name="spoooky jam 2005"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Pathfinder="*res://utils/pathfinder.gd"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

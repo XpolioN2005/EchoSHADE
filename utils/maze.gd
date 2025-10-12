@@ -16,6 +16,7 @@ extends Node2D
 # Internal data
 var maze = []        # 2D grid of 0 = path, 1 = wall
 var mirrors = []     # Positions of mirror tiles
+var is_mirror_loaded = false
 var rng := RandomNumberGenerator.new()
 
 # Tile IDs (assumes atlas with at least 2 tiles: wall=0, path=1, mirror=2)
@@ -23,29 +24,16 @@ const TILE_WALL = Vector2i(0, 0)
 const TILE_PATH = Vector2i(1, 0)
 const TILE_MIRROR = Vector2i(2, 0)
 
-@onready var generate_button: Button = Button.new()
 
 func _ready():
-	randomize_seed()
-	setup_ui()
-	initialize_maze()
-	generate_maze_iterative()
-	add_loops()
-	place_mirrors()
-	apply_to_tilemap()
+	make_maze()
+	
 
 func randomize_seed():
 	if SEED != 0:
 		rng.seed = SEED
 	else:
 		rng.randomize()
-
-func setup_ui():
-	generate_button.text = "Generate New Maze"
-	generate_button.position = Vector2(10, ROWS * 16 + 10)
-	generate_button.size = Vector2(150, 30)
-	generate_button.connect("pressed", Callable(self, "_on_generate_button_pressed"))
-	add_child(generate_button)
 
 func initialize_maze():
 	maze.clear()
@@ -122,6 +110,7 @@ func add_loops():
 
 func place_mirrors(min_mirrors := 4):
 	mirrors.clear()
+	is_mirror_loaded = false
 
 	# gather dead-ends
 	var dead_ends: Array = []
@@ -174,6 +163,7 @@ func place_mirrors(min_mirrors := 4):
 				if maze[y][x] == 0:
 					mirrors.append(Vector2i(x,y))
 					return
+	is_mirror_loaded = true
 
 func apply_to_tilemap():
 	tilemap.clear()
@@ -186,9 +176,10 @@ func apply_to_tilemap():
 	for m in mirrors:
 		tilemap.set_cell(m, 0, TILE_MIRROR)
 
-func _on_generate_button_pressed():
+func make_maze():
 	randomize_seed()
 	generate_maze_iterative()
 	add_loops()
-	place_mirrors(5)
+	place_mirrors()
 	apply_to_tilemap()
+	Pathfinder.setup(maze)

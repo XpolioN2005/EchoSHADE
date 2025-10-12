@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxuxy7rlb15k5"]
+[gd_scene load_steps=10 format=3 uid="uid://bxuxy7rlb15k5"]
 
 [ext_resource type="Script" uid="uid://blrj0ors37g62" path="res://utils/maze.gd" id="1_tk4ek"]
 [ext_resource type="Texture2D" uid="uid://con07xm6lcr1b" path="res://assests/tile_test.png" id="2_5f870"]
 [ext_resource type="PackedScene" uid="uid://bi3jlp6611a1q" path="res://entity/player/player.tscn" id="2_6dmrh"]
 [ext_resource type="Shader" uid="uid://bnnjwte6bvpmh" path="res://shaders/cutout.gdshader" id="4_5f870"]
 [ext_resource type="Script" uid="uid://dqepma64i31id" path="res://scenes/scripts/Cutoutshader.gd" id="5_67hgm"]
+[ext_resource type="PackedScene" uid="uid://di2f2x84namip" path="res://entity/enemy/enemy.tscn" id="6_qarnv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_67hgm"]
 texture = ExtResource("2_5f870")
@@ -59,3 +60,5 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0235294, 0.0745098, 0.133333, 0.929412)
 script = ExtResource("5_67hgm")
+
+[node name="enemy" parent="." instance=ExtResource("6_qarnv")]
