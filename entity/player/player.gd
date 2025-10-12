@@ -2,6 +2,9 @@ extends CharacterBody2D
 
 @export var speed: float = 20000
 
+func _ready():
+    add_to_group("player")
+
 func _physics_process(delta):
     var input_vector = Vector2.ZERO
     

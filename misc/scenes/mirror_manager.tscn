@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://djeo46itgirne"]
+
+[ext_resource type="Script" uid="uid://c1sme12gbmnjx" path="res://misc/scripts/mirror_manager.gd" id="1_sanx4"]
+[ext_resource type="PackedScene" uid="uid://cjapia5iou06h" path="res://misc/scenes/mirror.tscn" id="2_4fj4g"]
+
+[node name="mirror_manager" type="Node2D"]
+script = ExtResource("1_sanx4")
+mirror_scene = ExtResource("2_4fj4g")
+
+[node name="holder" type="Node2D" parent="."]

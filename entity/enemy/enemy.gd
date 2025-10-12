@@ -1,18 +1,16 @@
 extends Area2D
 
 @onready var root = get_tree().current_scene
+@onready var player = get_tree().get_first_node_in_group("player")
 
 var path = []
 var current_path_index = 0
 var speed = 100.0  
 
 func _ready():
-	while !root.is_mirror_loaded:
-		await get_tree().create_timer(0.1).timeout
-	if root.is_mirror_loaded:
-		global_position = Vector2((root.mirrors[0].x)*32 +16,(root.mirrors[0].y)*32+16)
+	add_to_group("enemy")
 
-	var end = Vector2i(round((%player.global_position.x-16) / 32.0), round((%player.global_position.y-16) / 32.0))
+	var end = Vector2i(round((player.global_position.x-16) / 32.0), round((player.global_position.y-16) / 32.0))
 	path = Pathfinder.find_path(root.mirrors[0], end)
 	current_path_index = 0
 
@@ -33,7 +31,7 @@ func _process(delta):
 		current_path_index += 1
 
 func update_path():
-	var end = Vector2i(round((%player.global_position.x-16) / 32.0), round((%player.global_position.y-16) / 32.0))
+	var end = Vector2i(round((player.global_position.x-16) / 32.0), round((player.global_position.y-16) / 32.0))
 	var start = Vector2i(round((global_position.x-16) / 32.0), round((global_position.y-16) / 32.0))
 	path = Pathfinder.find_path(start, end)
 	current_path_index = 0
