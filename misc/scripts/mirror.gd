@@ -13,7 +13,6 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
     if not body.is_in_group("player"):
         return
-    await get_tree().create_timer(0.1).timeout
     if _is_spawning:
         return
     _is_spawning = true
@@ -27,6 +26,7 @@ func _on_sprite_animation_finished() -> void:
         set_deferred("monitoring", true)
         return
 
+    await get_tree().create_timer(3).timeout
     holder = get_tree().get_first_node_in_group("enemy_holder")
     if holder and enemy_scene:
         var inst = enemy_scene.instantiate()
