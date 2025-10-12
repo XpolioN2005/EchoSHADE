@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjapia5iou06h"]
+[gd_scene load_steps=13 format=3 uid="uid://cjapia5iou06h"]
 
 [ext_resource type="Script" uid="uid://cogiufpj0c8g5" path="res://misc/scripts/mirror.gd" id="1_f4npm"]
 [ext_resource type="Texture2D" uid="uid://d2nkybxnrn510" path="res://assests/mirror.png" id="2_eoqam"]
 [ext_resource type="PackedScene" uid="uid://di2f2x84namip" path="res://entity/enemy/enemy.tscn" id="2_j6cc4"]
+[ext_resource type="AudioStream" uid="uid://uhvbi8f0fvt8" path="res://assests/breaking-glass-83809.mp3" id="4_j6cc4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x70v4"]
 size = Vector2(32, 32)
@@ -72,5 +73,8 @@ shape = SubResource("RectangleShape2D_x70v4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6bn1i")
 animation = &"break"
+
+[node name="glass_break" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_j6cc4")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bxuxy7rlb15k5"]
+[gd_scene load_steps=16 format=3 uid="uid://bxuxy7rlb15k5"]
 
 [ext_resource type="Script" uid="uid://blrj0ors37g62" path="res://utils/maze.gd" id="1_crgmj"]
 [ext_resource type="Texture2D" uid="uid://c04vlidy1d3sd" path="res://assests/tiles.png" id="2_ykl68"]
@@ -10,6 +10,7 @@
 [ext_resource type="Shader" uid="uid://bk5uypntted2a" path="res://shaders/screen_fog.gdshader" id="8_15xn6"]
 [ext_resource type="PackedScene" uid="uid://bbihkavihuf8p" path="res://entity/enemy/enemy_all_knowing.tscn" id="8_i67be"]
 [ext_resource type="Script" uid="uid://cw01p86yyhvks" path="res://scripts/screen_fog.gd" id="9_6rghc"]
+[ext_resource type="PackedScene" uid="uid://2xry2m216vhb" path="res://scenes/UI/ui_controller.tscn" id="10_067ks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i67be"]
 texture = ExtResource("2_ykl68")
@@ -105,5 +106,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_6rghc")
+
+[node name="ui controller" parent="CanvasLayer" instance=ExtResource("10_067ks")]
 
 [node name="enemy_AL_KNOWING" parent="." instance=ExtResource("8_i67be")]

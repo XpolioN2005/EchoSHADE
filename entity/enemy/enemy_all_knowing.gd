@@ -69,3 +69,9 @@ func _update_animation(move_vec: Vector2) -> void:
 				anim.play("run_down")
 			else:
 				anim.play("run_up")
+
+
+func _on_body_entered(body:Node2D) -> void:
+	if body.is_in_group("player"):
+		$sound.play()
+		Global.is_gameover = true

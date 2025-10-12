@@ -224,4 +224,6 @@ func _update_animation(move_vec: Vector2) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("over")
+		$sound.play()
+		Global.is_gameover = true
+

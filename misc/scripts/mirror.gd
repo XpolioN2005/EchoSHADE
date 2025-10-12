@@ -6,6 +6,8 @@ var _is_spawning: bool = false
 const SPAWN_ANIM := "break"
 const IDLE_ANIM := "idle"
 
+@onready var sound = $glass_break
+
 func _ready() -> void:
     $AnimatedSprite2D.play(IDLE_ANIM)
     $AnimatedSprite2D.connect("animation_finished", Callable(self, "_on_sprite_animation_finished"))
@@ -18,6 +20,7 @@ func _on_body_entered(body: Node2D) -> void:
     _is_spawning = true
     set_deferred("monitoring", false)   # avoid retriggers while spawning
     $AnimatedSprite2D.play(SPAWN_ANIM)  # must be non-looping
+    sound.play()
 
 func _on_sprite_animation_finished() -> void:
     if $AnimatedSprite2D.animation != SPAWN_ANIM:

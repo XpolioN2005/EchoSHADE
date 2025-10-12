@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://di2f2x84namip"]
+[gd_scene load_steps=23 format=3 uid="uid://di2f2x84namip"]
 
 [ext_resource type="Script" uid="uid://cvlgftww8hilx" path="res://entity/enemy/enemy.gd" id="1_lvn57"]
 [ext_resource type="Texture2D" uid="uid://e1slonerhmco" path="res://assests/enemy_base_16x16.png" id="2_lvn57"]
+[ext_resource type="AudioStream" uid="uid://jrpikvvhu15r" path="res://assests/jump-scare-sound-2-82831.mp3" id="3_pmu85"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8vdsg"]
 size = Vector2(22, 22)
@@ -165,6 +166,9 @@ autostart = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_cvd3r")
 animation = &"run_down"
+
+[node name="sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_pmu85")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="pathtimer" to="." method="_on_path_timer_timeout"]
