@@ -187,3 +187,8 @@ func randi_range(a:int, b:int) -> int:
 #func _draw():
 #    if player:
 #        draw_line(Vector2.ZERO, to_local(player.global_position), Color.red)
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		print("over")

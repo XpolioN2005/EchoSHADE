@@ -1,34 +1,55 @@
 [gd_scene load_steps=11 format=3 uid="uid://bxuxy7rlb15k5"]
 
 [ext_resource type="Script" uid="uid://blrj0ors37g62" path="res://utils/maze.gd" id="1_crgmj"]
-[ext_resource type="Texture2D" uid="uid://con07xm6lcr1b" path="res://assests/tile_test.png" id="2_ykl68"]
+[ext_resource type="Texture2D" uid="uid://c04vlidy1d3sd" path="res://assests/tiles.png" id="2_ykl68"]
 [ext_resource type="PackedScene" uid="uid://bi3jlp6611a1q" path="res://entity/player/player.tscn" id="3_i67be"]
 [ext_resource type="Shader" uid="uid://bnnjwte6bvpmh" path="res://shaders/cutout.gdshader" id="4_15xn6"]
 [ext_resource type="PackedScene" uid="uid://boovqwd2cdoyp" path="res://misc/scenes/enemy_holder.tscn" id="4_ykl68"]
 [ext_resource type="Script" uid="uid://dqepma64i31id" path="res://scripts/Cutoutshader.gd" id="5_6rghc"]
 [ext_resource type="PackedScene" uid="uid://djeo46itgirne" path="res://misc/scenes/mirror_manager.tscn" id="7_ykl68"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_67hgm"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i67be"]
 texture = ExtResource("2_ykl68")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+8:0/0 = 0
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+8:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_qarnv"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_67hgm")
+sources/0 = SubResource("TileSetAtlasSource_i67be")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_67hgm"]
 shader = ExtResource("4_15xn6")

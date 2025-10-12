@@ -21,8 +21,8 @@ var rng := RandomNumberGenerator.new()
 
 # Tile IDs (assumes atlas with at least 2 tiles: wall=0, path=1, mirror=2)
 const TILE_WALL = Vector2i(0, 0)
-const TILE_PATH = Vector2i(1, 0)
-const TILE_MIRROR = Vector2i(2, 0)
+const TILE_PATH = Vector2i(8, 0)
+const TILE_MIRROR = Vector2i(8, 1)
 
 
 func _ready():
@@ -67,7 +67,7 @@ func generate_maze_iterative():
 			stack.append(next)
 		else:
 			stack.pop_back()
-
+	
 func add_loops():
 	# Build candidate list: wall cells that sit between two path tiles (vertical or horizontal)
 	var candidates: Array = []
@@ -165,11 +165,44 @@ func place_mirrors(min_mirrors := 4):
 					return
 	is_mirror_loaded = true
 
+func get_wall_tile(x:int, y:int) -> Vector2i:
+	# returns the proper wall tile based on neighbors
+	if maze[y][x] == 0:
+		return TILE_PATH
+
+	var up = y > 0 and maze[y-1][x] == 1
+	var right = x < COLS-1 and maze[y][x+1] == 1
+	var down = y < ROWS-1 and maze[y+1][x] == 1
+	var left = x > 0 and maze[y][x-1] == 1
+
+	# 4-bit code: up-right-down-left
+	var code = int(up)<<3 | int(right)<<2 | int(down)<<1 | int(left)
+
+	# map code to your 8x8 wall atlas coordinates
+	match code:
+		0: return Vector2i(0,0)   # isolated wall
+		1: return Vector2i(1,0)   # left
+		2: return Vector2i(2,0)   # down
+		3: return Vector2i(3,0)   # corner bottom-left
+		4: return Vector2i(4,0)   # right
+		5: return Vector2i(5,0)   # horizontal
+		6: return Vector2i(6,0)   # corner bottom-right
+		7: return Vector2i(7,0)   # T missing top
+		8: return Vector2i(0,1)   # up
+		9: return Vector2i(1,1)   # corner top-left
+		10: return Vector2i(2,1)  # vertical
+		11: return Vector2i(3,1)  # T missing right
+		12: return Vector2i(4,1)  # corner top-right
+		13: return Vector2i(5,1)  # T missing bottom
+		14: return Vector2i(6,1)  # T missing left
+		15: return Vector2i(7,1)  # 4-way cross
+		_: return TILE_WALL   # fallback
+
 func apply_to_tilemap():
 	tilemap.clear()
 	for y in range(ROWS):
 		for x in range(COLS):
-			var tile = TILE_WALL if maze[y][x] == 1 else TILE_PATH
+			var tile = get_wall_tile(x, y) if maze[y][x] == 1 else TILE_PATH
 			tilemap.set_cell(Vector2i(x, y), 0, tile)
 	
 	# debug mirror
@@ -181,5 +214,8 @@ func make_maze():
 	generate_maze_iterative()
 	add_loops()
 	place_mirrors()
+
+	maze[ROWS -2][COLS-2] = 0
+
 	apply_to_tilemap()
 	Pathfinder.setup(maze)
