@@ -20,5 +20,3 @@ Avoid your echo and survive
 A short, atmospheric survival game about paranoia and reflection.
 
 🎧 Sound Effect Credits: Sound effects by freesound_community from Pixabay
-
-Would you like me to make a slightly spookier tagline for the top (like a one-liner before the title — “Face your own shadow before it replaces you”)? It helps the page stand out in jams.
